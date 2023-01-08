@@ -1,0 +1,24 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority'
+
+const typography = cva('', {
+  variants: {
+    variant: {
+      h1: ['text-5xl', 'font-bold', 'font-heading'],
+      p: ['text-base'],
+    },
+  },
+})
+
+type Props = VariantProps<typeof typography> & {
+  htmlTag?: keyof HTMLElementTagNameMap
+}
+
+const { variant = 'p', htmlTag } = Astro.props
+let Component: keyof HTMLElementTagNameMap = variant!
+if (htmlTag) Component = htmlTag
+---
+
+<Component class={typography({ variant })}>
+  <slot />
+</Component>
